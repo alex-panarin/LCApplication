@@ -25,7 +25,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LC.Backend.Common", "LC.Bac
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LC.Services.Identity", "LC.Services.Identity\LC.Services.Identity.csproj", "{25FFC520-17E5-4CA2-9069-C0748C3A73AD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LC.Services.Logging", "LC.Services.Logging\LC.Services.Logging.csproj", "{5F0C0E5E-6398-4C0D-8E7F-6A14916E62DE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LC.Services.Logging", "LC.Services.Logging\LC.Services.Logging.csproj", "{5F0C0E5E-6398-4C0D-8E7F-6A14916E62DE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
