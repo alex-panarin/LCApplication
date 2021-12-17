@@ -27,6 +27,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LC.Services.Identity", "LC.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LC.Services.Logging", "LC.Services.Logging\LC.Services.Logging.csproj", "{5F0C0E5E-6398-4C0D-8E7F-6A14916E62DE}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Startup", "Startup", "{3D411682-9B5F-4E56-8844-2679C542933D}"
+	ProjectSection(SolutionItems) = preProject
+		Startup\docker-compose.yaml = Startup\docker-compose.yaml
+		Startup\nginx.conf = Startup\nginx.conf
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
