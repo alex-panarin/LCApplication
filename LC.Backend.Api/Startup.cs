@@ -1,3 +1,5 @@
+using LC.Backend.Common.Auth;
+using LC.Backend.Common.MessageBus;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -21,6 +23,8 @@ namespace LC.Backend.Api
         {
 
             services.AddControllers();
+            services.AddJwt(Configuration);
+            services.AddRabbitMq(Configuration);
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "LC.Backend.Api", Version = "v1" });
@@ -41,7 +45,7 @@ namespace LC.Backend.Api
 
             app.UseRouting();
 
-            app.UseAuthorization();
+            app.UseAuthentication();
 
             app.UseEndpoints(endpoints =>
             {
