@@ -20,6 +20,7 @@ namespace LC.Services.Identity
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
+                    webBuilder.UseDefaultServiceProvider(option => option.ValidateScopes = false);
                     webBuilder.UseStartup<Startup>();
                 });
     }

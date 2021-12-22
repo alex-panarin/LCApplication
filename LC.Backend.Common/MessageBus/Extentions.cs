@@ -2,7 +2,6 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using RawRabbit.vNext;
-using System.Reflection;
 using IBusClient = RawRabbit.IBusClient;
 
 namespace LC.Backend.Common.MessageBus

@@ -11,8 +11,9 @@ namespace LC.Backend.Common.Auth
         public static void AddJwt(this IServiceCollection services, IConfiguration config)
         {
             var jwtConfig = new JwtConfig();
-            config.GetSection("jwt").Bind(jwtConfig);
-            services.AddSingleton(cfg => cfg.GetService<IOptions<JwtConfig>>().Value);
+            var section = config.GetSection("jwt");
+            section.Bind(jwtConfig);
+            services.Configure<JwtConfig>(section);
             services.AddSingleton<IJwtHandler, JwtHandler>();
             services.AddAuthentication()
                 .AddJwtBearer(cfg =>

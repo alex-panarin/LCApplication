@@ -9,5 +9,9 @@ namespace LC.Backend.Api.Controllers
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class ApiController : ControllerBase
     {
+        public ApiController()
+        {
+            
+        }
     }
 }

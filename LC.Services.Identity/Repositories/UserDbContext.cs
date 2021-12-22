@@ -10,7 +10,7 @@ namespace LC.Services.Identity.Repositories
     public class UserDbContext : MongoDbContext<User>
     {
         public UserDbContext(IMongoDatabase db)
-            : base(db, ()=> db.GetCollection<User>("user"))
+            : base(db, ()=> db.GetCollection<User>("users"))
         {
             
         }

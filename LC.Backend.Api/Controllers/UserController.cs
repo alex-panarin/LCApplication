@@ -18,7 +18,7 @@ namespace LC.Backend.Api.Controllers
         }
         
         [HttpPost]
-        public async Task<IActionResult> CreateUser([FromBody] CreateUser user)
+        public async Task<IActionResult> Create([FromBody] CreateUser user)
         {
             await _busClient.PublishAsync(user);
             return Accepted();

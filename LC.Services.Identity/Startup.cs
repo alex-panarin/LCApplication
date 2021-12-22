@@ -5,13 +5,17 @@ using LC.Backend.Common.DB;
 using LC.Backend.Common.MessageBus;
 using LC.Backend.Common.MessageBus.RawRabbit;
 using LC.Services.Identity.Handlers;
+using LC.Services.Identity.Logging;
 using LC.Services.Identity.Repositories;
+using LC.Services.Identity.Repositories.Encrypter;
 using LC.Services.Identity.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
+using RawRabbit;
 
 namespace LC.Services.Identity
 {
@@ -27,15 +31,16 @@ namespace LC.Services.Identity
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
             services.AddControllers();
             services.AddJwt(Configuration);
             services.AddMongoDb(Configuration);
             services.AddRabbitMq(Configuration);
+            services.AddMqLogging();
             services.AddScoped<UserDbContext>();
             services.AddScoped<ICommandHandler<CreateUser>, CreateUserHandler>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IPasswordEncrypter, PasswordEcnrypter>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

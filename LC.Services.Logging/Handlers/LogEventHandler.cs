@@ -17,7 +17,6 @@ namespace LC.Services.Logging.Handlers
         public async Task HandleAsync(LogEvent @event)
         {
             await _repository.Log(@event.ToLog());
-            //await Task.CompletedTask;
         }
     }
 }

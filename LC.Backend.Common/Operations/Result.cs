@@ -15,18 +15,23 @@ namespace LC.Backend.Common.Operations
         
         public Guid? CorrelationId { get; protected set; }
         
-        public KeyValuePair<string, string>[] Errors { get; protected set; }
+        protected List<string> Errors { get; } = new List<string> { };
+
+        public Result<T> AddError(string error)
+        {
+            Errors.Add(error);
+            return this;
+        }
+
+        public string ErrorMessages => $"{string.Join(";", Errors)}";
 
         public static Result<T> Success(T data = default(T), Guid? correlationId = null)
             => new Result<T> { Data = data, CorrelationId = correlationId, IsSuccess = true };
         
-        public static Result<T> Error(KeyValuePair<string, string> error,  T data = default(T), Guid? correlationId = null)
-            => new Result<T> { Errors = new KeyValuePair<string, string>[1] {error}, Data = data, CorrelationId = correlationId, IsSuccess = false};
-
-        public static Result<T> Error(string errorCode, string errorMessage, T data = default(T), Guid? correlationId = null)
-            => Error(new KeyValuePair<string, string> (errorCode, errorMessage), data, correlationId);
+        public static Result<T> Error(string error,  T data = default(T), Guid? correlationId = null)
+            => new Result<T> {Data = data, CorrelationId = correlationId, IsSuccess = false}.AddError(error);
 
         public static Result<T> Error(Exception x, T data = default(T), Guid? correlationId = null)
-            => Error(x.Message, x.StackTrace, data, correlationId);
+            => Error(x.Message, data, correlationId);
     }
 }

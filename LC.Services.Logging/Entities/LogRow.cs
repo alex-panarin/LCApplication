@@ -10,12 +10,11 @@ namespace LC.Services.Logging.Entities
             DateCreated = DateTime.Now;
         }
         public Guid Id { get ; set ; }
-
         public DateTime DateCreated { get; protected set; }
-
         public string Operation { get; set; }
         public string Method { get; set; }
         public string Data { get; set; }
-
+        public string CorrelationId { get; set; }
+        public string State { get; set; }
     }
 }

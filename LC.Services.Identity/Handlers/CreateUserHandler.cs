@@ -16,7 +16,7 @@ namespace LC.Services.Identity.Handlers
         }
         public async Task HandleAsync(CreateUser command)
         {
-            await _userService.CreateAsync(command.Email, command.Name, command.Password);
+            await _userService.CreateAsync(command.Email, command.Name, command.Password, Guid.NewGuid());
         }
     }
 }

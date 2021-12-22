@@ -1,4 +1,6 @@
-﻿using System;
+﻿using LC.Backend.Common.Operations;
+using System;
+using System.Text.Json;
 
 namespace LC.Backend.Common.Logging
 {
@@ -15,14 +17,27 @@ namespace LC.Backend.Common.Logging
         public static LogObject Define(Guid? correlationId, string logOperation, string logMethod, string logState, object logResult = null)
         {
             var logObject = new LogObject
-            { 
-                CorrelationId = correlationId ?? Guid.Empty, 
+            {
+                CorrelationId = correlationId ?? Guid.Empty,
                 LogMethod = logMethod,
                 LogState = logState,
                 LogOperation = logOperation,
+                LogResult = SerializeResult(logResult)
             };
 
             return logObject;
+        }
+
+        private static string SerializeResult(object logResult)
+        {
+            return logResult is String
+                ? logResult.ToString()
+                : JsonSerializer.Serialize(logResult, Utils.JsonOptions);
+        }
+
+        public override string ToString()
+        {
+            return SerializeResult(this);
         }
     }
 }

@@ -1,7 +1,9 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using LC.Backend.Common.Operations;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Concurrent;
 using System.Runtime.CompilerServices;
+using System.Text.Json;
 
 namespace LC.Backend.Common.Logging
 {
@@ -24,5 +26,11 @@ namespace LC.Backend.Common.Logging
         {
            LogError(logger, null, x, caller);
         }
+
+        public static string ToLogMessage(this LogObject lo)
+        {
+            return JsonSerializer.Serialize(lo, Utils.JsonOptions);
+        }
+    
     }
 }

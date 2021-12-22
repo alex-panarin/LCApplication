@@ -8,8 +8,8 @@ namespace LC.Services.Identity.Repositories.Entities
         public Guid Id { get; set; }
         public string Email { get; protected set; }
         public string Name { get; protected set; }
-        public string Password { get; protected set; }
-        public string Salt { get; protected set; }
+        public string Password { get; set; }
+        public string Salt { get; set; }
         public DateTime CreatedAt { get; protected set; }
 
         protected User()
