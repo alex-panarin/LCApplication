@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace LC.Backend.Api.Controllers
 {
@@ -11,7 +12,12 @@ namespace LC.Backend.Api.Controllers
     {
         public ApiController()
         {
-            
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetTask()
+        {
+            return await Task.FromResult(Ok("GetTask"));
         }
     }
 }

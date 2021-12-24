@@ -57,7 +57,7 @@ namespace LC.Services.Identity
                 endpoints.MapControllers();
             });
             app.ApplicationServices.GetService<IDbInitializer>().InitializeAsync();
-            app.ApplicationServices.SubscribeToCommand<CreateUser>();
+            app.SubscribeToCommand<CreateUser>();
         }
     }
 }

@@ -21,7 +21,7 @@ namespace LC.Services.Identity.Controllers
         [HttpGet("/")]
         public async Task<string> Ping()
         {
-            return await Task.FromResult($"Ping now: {DateTimeOffset.Now.ToLocalTime()}");
+            return await Task.FromResult($"Ping {nameof(IdentityController)} now: {DateTime.Now.ToUniversalTime()}");
         }
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] Authenticate authenticate)

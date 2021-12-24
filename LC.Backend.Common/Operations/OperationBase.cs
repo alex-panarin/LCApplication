@@ -15,25 +15,13 @@ namespace LC.Backend.Common.Operations
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
-        public Result<TResult> Execute(TInput input, Guid? correlationId, [CallerMemberName] string methodName = null)
-        {
-            Result<TResult> result = default(Result<TResult>);
-            try
-            {
-                result = CallMethodWraped(() => ExecuteImpl(input), correlationId, methodName);
-            }
-            catch(Exception x)
-            { 
-                Logger.LogError(x);
-            }
-            return result;
-        }
+       
         public async Task<Result<TResult>> ExecuteAsync(TInput input, Guid? correlationId, [CallerMemberName] string methodName = null)
         {
             Result<TResult> result = null;
             try
             {
-                result =  await CallMethodWrapedAync(async () => await ExecuteImplAsync(input), correlationId, methodName);
+                result =  await CallMethodWrapedAync(() => ExecuteImplAsync(input), input, correlationId, methodName);
             }
             catch (Exception x)
             {
@@ -42,9 +30,9 @@ namespace LC.Backend.Common.Operations
             }
             return result;
         }
-        protected async Task<Result<TResult>> CallMethodWrapedAync(Func<Task<Result<TResult>>> method, Guid? correlationId, string methodName)
+        protected async Task<Result<TResult>> CallMethodWrapedAync(Func<Task<Result<TResult>>> method, TInput input, Guid? correlationId, string methodName)
         {
-            var logObject = LogObject.Define(correlationId, OperationName, methodName, LogObject.LogStateStarted);
+            var logObject = LogObject.Define(correlationId, OperationName, methodName, LogObject.LogStateStarted, input);
             var operation = $"{OperationName}.{methodName}";
             Logger.LogInfo(logObject, operation);
 
@@ -64,37 +52,10 @@ namespace LC.Backend.Common.Operations
 
             return result;
         }
-        protected virtual Result<TResult> ExecuteImpl(TInput input) 
-        {
-            throw new NotImplementedException();
-        }
-        protected virtual Task<Result<TResult>> ExecuteImplAsync(TInput input) 
-        {
-            throw new NotImplementedException();
-        }
+        protected abstract Task<Result<TResult>> ExecuteImplAsync(TInput input);
         protected JsonSerializerOptions JsonOptions => Utils.JsonOptions;
         protected ILogger Logger => _logger;
         protected abstract string OperationName { get; }
-        protected virtual Result<TResult> CallMethodWraped(Func<Result<TResult>> method, Guid? correlationId, string methodName)
-        {
-            var logObject = LogObject.Define(correlationId, nameof(TResult), methodName, LogObject.LogStateStarted);
-            Logger.LogInfo(logObject, methodName);
-
-            var result = method();
-
-            if (!result.IsSuccess)
-            {
-                logObject.LogState = LogObject.LogStateFailed;
-                Logger.LogError(logObject, null, methodName);
-            }
-            else
-            {
-                logObject.LogState = LogObject.LogStateCompleted;
-                logObject.LogResult = JsonSerializer.Serialize(result.Data, JsonOptions);
-                Logger.LogInfo(logObject, methodName);
-            }
-
-            return result;
-        }
+        
     }
 }

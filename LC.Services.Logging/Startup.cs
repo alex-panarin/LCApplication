@@ -48,7 +48,7 @@ namespace LC.Services.Logging
                 endpoints.MapControllers();
             });
             app.ApplicationServices.GetService<IDbInitializer>().InitializeAsync();
-            app.ApplicationServices.SubscribeToEvent<LogEvent>();
+            app.SubscribeToEvent<LogEvent>();
         }
     }
 }

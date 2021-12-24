@@ -6,9 +6,9 @@ namespace LC.Backend.Common.Logging
 {
     public class LogObject
     {
-        public const string LogStateStarted = nameof(LogStateStarted);
-        public const string LogStateCompleted = nameof(LogStateCompleted);
-        public const string LogStateFailed = nameof(LogStateFailed);
+        public const string LogStateStarted = "Started";
+        public const string LogStateCompleted = "Completed";
+        public const string LogStateFailed = "Failed";
         public Guid? CorrelationId { get; set; }
         public string LogOperation { get; set; }
         public string LogMethod { get; set; }
@@ -30,7 +30,7 @@ namespace LC.Backend.Common.Logging
 
         private static string SerializeResult(object logResult)
         {
-            return logResult is String
+            return logResult is string
                 ? logResult.ToString()
                 : JsonSerializer.Serialize(logResult, Utils.JsonOptions);
         }

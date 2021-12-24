@@ -1,4 +1,4 @@
-version: "3"
+version: "3.4"
 
 services:
   start-dependencies:
@@ -9,7 +9,7 @@ services:
     command: rabbitmq:5672
 
   api:
-    build: ../LCApplication/LC.Backend.Api
+    build: ../LC.Backend.Api
     links:
       - rabbitmq
       - mongo
@@ -17,7 +17,7 @@ services:
       - '5000:5000'
 
   log-service:
-    build: ../LCApplication/LC.Services.Logging
+    build: ../LC.Services.Logging
     links:
       - rabbitmq
       - mongo
@@ -25,7 +25,7 @@ services:
       - '5050:5050'
 
   identity-service:
-    build: ../LCApplication/LC.Services.Identity
+    build: ../LC.Services.Identity
     links:
       - rabbitmq
       - mongo

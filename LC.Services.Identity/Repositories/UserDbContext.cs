@@ -14,9 +14,9 @@ namespace LC.Services.Identity.Repositories
         {
             
         }
-        public Task<User> GetAsync(string email)
+        public async Task<User> GetAsync(string email)
         {
-            return Collection
+            return await Collection
                 .AsQueryable()
                 .Where(x => x.Email == email)
                 .FirstOrDefaultAsync();
