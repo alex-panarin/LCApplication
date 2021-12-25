@@ -22,7 +22,7 @@ namespace LC.Services.Identity.Handlers
         public async Task HandleAsync(AuthenticateRequest @event, Guid globalMessageId)
         {
             //var correlationId = Guid.NewGuid();
-            var result = await _service.LoginAsync(new Authenticate { Email = @event.email, Password = @event.password, CorrelationId = globalMessageId }, globalMessageId);
+            var result = await _service.LoginAsync(new Authenticate { Email = @event.email, Password = @event.password}, globalMessageId);
             
             await _client.PublishAsync(new AuthenticateResponse { Token = result.Data, ErrorMessage = result.ErrorMessages, IsSuccess = result.IsSuccess }, globalMessageId);
         }

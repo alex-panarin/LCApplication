@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace LC.Backend.Common.Commands.Models
 {
-    public class Authenticate : ICommand
+    public class Authenticate 
     {
-        public Guid CorrelationId { get; set; }
         public string Email { get; set; }
         public string Password{ get; set; }
     }
