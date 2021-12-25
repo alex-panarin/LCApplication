@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace LC.Backend.Common.Operations
 {
-    [Serializable]
     public class Result<T>
     {
         public bool IsSuccess { get; protected set; }
@@ -15,6 +15,7 @@ namespace LC.Backend.Common.Operations
         
         public Guid? CorrelationId { get; protected set; }
         
+        [JsonIgnore]    
         protected List<string> Errors { get; } = new List<string> { };
 
         public Result<T> AddError(string error)

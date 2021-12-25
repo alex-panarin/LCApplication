@@ -2,7 +2,8 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using RawRabbit.vNext;
-using IBusClient = RawRabbit.IBusClient;
+using RawRabbit.Extensions.Client;
+using RawRabbit.Context;
 
 namespace LC.Backend.Common.MessageBus
 {
@@ -11,7 +12,9 @@ namespace LC.Backend.Common.MessageBus
         public static void AddRabbitMq(this IServiceCollection services, IConfiguration configuration)
         {
             var options = configuration.GetSection("rabbitmq").Get<RabbitMqOptions>();
-            services.AddSingleton<IBusClient>(_ => BusClientFactory.CreateDefault(options));
+            services.AddRawRabbit(configuration.GetSection("rabbitmq"));
+            services.AddSingleton<IBusClient>(new ExtendableBusClient(ServiceCollectionContainerBuilderExtensions.BuildServiceProvider(services)));
+            //services.AddSingleton<IBusClient>(_ => BusClientFactory.CreateDefault(options));
         }
         
     }

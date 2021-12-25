@@ -2,6 +2,8 @@ using LC.Backend.Common.Auth;
 using LC.Backend.Common.Commands;
 using LC.Backend.Common.Commands.Models;
 using LC.Backend.Common.DB;
+using LC.Backend.Common.Events;
+using LC.Backend.Common.Events.Models;
 using LC.Backend.Common.MessageBus;
 using LC.Backend.Common.MessageBus.RawRabbit;
 using LC.Services.Identity.Handlers;
@@ -14,8 +16,6 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using RawRabbit;
 
 namespace LC.Services.Identity
 {
@@ -38,6 +38,7 @@ namespace LC.Services.Identity
             services.AddMqLogging();
             services.AddScoped<UserDbContext>();
             services.AddScoped<ICommandHandler<CreateUser>, CreateUserHandler>();
+            services.AddScoped<IEventHandler<AuthenticateRequest>, AuthenticateHandler>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IPasswordEncrypter, PasswordEcnrypter>();
@@ -58,6 +59,7 @@ namespace LC.Services.Identity
             });
             app.ApplicationServices.GetService<IDbInitializer>().InitializeAsync();
             app.SubscribeToCommand<CreateUser>();
+            app.SubscribeToEvent<AuthenticateRequest>();
         }
     }
 }

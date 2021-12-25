@@ -14,7 +14,7 @@ namespace LC.Services.Logging.Handlers
         {
             _repository = repository;
         }
-        public async Task HandleAsync(LogEvent @event)
+        public async Task HandleAsync(LogEvent @event, Guid globalMessageId)
         {
             await _repository.Log(@event.ToLog());
         }

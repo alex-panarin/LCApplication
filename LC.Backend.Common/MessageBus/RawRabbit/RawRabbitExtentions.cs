@@ -4,8 +4,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Reflection;
-using System.Threading.Tasks;
-using IBusClient = RawRabbit.IBusClient;
+using RawRabbit.Extensions.Client;
 
 namespace LC.Backend.Common.MessageBus.RawRabbit
 {
@@ -17,7 +16,7 @@ namespace LC.Backend.Common.MessageBus.RawRabbit
            => bus.SubscribeAsync<TCommand>(async (msg, ctx) => await handler.HandleAsync(msg),
                config => config.WithQueue(q => q.WithName(GetQueueName<TCommand>())));
         public static void AddEventHandler<TEvent>(this IBusClient bus, IEventHandler<TEvent> handler) where TEvent : IEvent
-            => bus.SubscribeAsync<TEvent>(async (msg, ctx) => await handler.HandleAsync(msg),
+            => bus.SubscribeAsync<TEvent>(async (msg, ctx) => await handler.HandleAsync(msg, ctx.GlobalRequestId),
                 cfg => cfg.WithQueue(q => q.WithName(GetQueueName<TEvent>())));
         public static IServiceProvider SubscribeToCommand<TCommand>(this IServiceProvider provider) where TCommand : ICommand
         {
