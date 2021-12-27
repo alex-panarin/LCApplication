@@ -19,7 +19,7 @@ namespace LC.Backend.Api.Controllers
             _busClient = busClient ?? throw new ArgumentNullException(nameof(busClient));
         }
         
-        [HttpPost]
+        [HttpPost("create")]
         public async Task<IActionResult> CreateUser([FromBody] CreateUser user)
         {
             await _busClient.PublishAsync(user);
@@ -32,7 +32,7 @@ namespace LC.Backend.Api.Controllers
             var authMessage = new AuthenticateRequest { email = authenticate.Email, password = authenticate.Password };
             var sequence = _busClient.ExecuteSequence(c => c
                .PublishAsync(authMessage)
-               .Complete<AuthenticateResponse>()) ;
+               .Complete<AuthenticateResponse>());
 
             var result = await sequence.Task.ConfigureAwait(true);
 

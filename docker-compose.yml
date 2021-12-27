@@ -1,46 +1,58 @@
-version: "3.4"
+version: '3.4'
 
 services:
-  start-dependencies:
-    image: LCApplication-dependencies
+#  nginx:
+#    image: nginx
+#    container_name: 'nginx'
+#    volumes:
+#      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+#    depends_on:
+#        - lc.backend.api
+#    ports:
+#        - "80:80"
+#    restart: always
+  lc.backend.api:
+    build:
+      context: .
+      dockerfile: LC.Backend.Api/Dockerfile
+    ports:
+        - '5000:80'
     depends_on:
-      - mongo
-      - rabbitmq
-    command: rabbitmq:5672
+        - rabbitmq
 
-  api:
-    build: ../LC.Backend.Api
-    links:
-      - rabbitmq
-      - mongo
+  lc.services.identity:
+    build:
+      context: .
+      dockerfile: LC.Services.Identity/Dockerfile
     ports:
-      - '5000:5000'
+        - '5001'
+    links:
+        - rabbitmq
+        - mongo
 
-  log-service:
-    build: ../LC.Services.Logging
-    links:
-      - rabbitmq
-      - mongo
+  lc.services.logging:
+    build:
+      context: .
+      dockerfile: LC.Services.Logging/Dockerfile
     ports:
-      - '5050:5050'
+        - '5002'
+    links:
+        - rabbitmq
+        - mongo
 
-  identity-service:
-    build: ../LC.Services.Identity
-    links:
-      - rabbitmq
-      - mongo
+  rabbitmq:
+    container_name: 'rabbitmq'
+    image: rabbitmq:3.6.5-management
     ports:
-      - '5051:5051'
+      - '5672:5672'
+      - '15672:15672'
 
   mongo:
+    container_name: 'mongo'
     image: mongo
     volumes:
       - ./data/db:/data/db
     ports:
       - '27017:27017'
-
-  rabbitmq:
-    image: rabbitmq:3.6.5-management
-    ports:
-      - '5672:5672'
-      - '15672:15672'
+    
+    

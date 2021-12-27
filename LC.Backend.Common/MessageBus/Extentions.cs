@@ -11,11 +11,9 @@ namespace LC.Backend.Common.MessageBus
     {
         public static void AddRabbitMq(this IServiceCollection services, IConfiguration configuration)
         {
-            var options = configuration.GetSection("rabbitmq").Get<RabbitMqOptions>();
+            //var options = configuration.GetSection("rabbitmq").Get<RabbitMqOptions>();
             services.AddRawRabbit(configuration.GetSection("rabbitmq"));
             services.AddSingleton<IBusClient>(new ExtendableBusClient(ServiceCollectionContainerBuilderExtensions.BuildServiceProvider(services)));
-            //services.AddSingleton<IBusClient>(_ => BusClientFactory.CreateDefault(options));
         }
-        
     }
 }

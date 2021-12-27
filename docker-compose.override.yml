@@ -1,0 +1,14 @@
+version: '3.4'
+
+services:
+  lc.backend.api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+  
+  lc.services.identity:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+ 
+  lc.services.logging:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
