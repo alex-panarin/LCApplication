@@ -1,3 +1,4 @@
+using LC.Backend.Api.Services;
 using LC.Backend.Common.Auth;
 using LC.Backend.Common.MessageBus;
 using Microsoft.AspNetCore.Builder;
@@ -31,6 +32,7 @@ namespace LC.Backend.Api
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "LC.Backend.Api", Version = "v1" });
             });
+            services.AddScoped<IAccountService, AccountService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
