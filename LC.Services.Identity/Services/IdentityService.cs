@@ -24,5 +24,11 @@ namespace LC.Services.Identity.Services
                 Token   = result.Data?.Token
             };
         }
+
+        public override async Task<CreateResponse> Create(CreateRequest request, ServerCallContext context)
+        {
+            var result = await _userService.CreateAsync(request.Email, request.Name, request.Password, Guid.NewGuid());
+            return new CreateResponse { IsSuccess = result.IsSuccess, ErrorMessage = result.ErrorMessages};
+        }
     }
 }

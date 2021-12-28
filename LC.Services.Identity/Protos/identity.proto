@@ -8,12 +8,26 @@ package identity;
 service Identity {
   // Sends a greeting
   rpc Login (AuthRequest) returns (AuthResponce);
+  rpc Create (CreateRequest) returns (CreateResponse);
 }
 
 // The request message containing the user's name.
 message AuthRequest {
   string email = 1;
   string password = 2;
+}
+
+message CreateRequest
+{
+	string name = 1;
+	string email = 2;
+	string password = 3;
+}
+
+message CreateResponse
+{
+	bool IsSuccess = 1;
+	string ErrorMessage = 2;
 }
 
 // The response message containing the greetings.

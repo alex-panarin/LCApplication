@@ -18,9 +18,13 @@ namespace LC.Backend.Api.Services
         }
         public async Task<Result<bool>> CreateAsync(CreateUser user, Guid? correlationId)
         {
-            var result = await InvokeWrapedAsync2(() =>
+            var result = await InvokeWrapedAsync(async () =>
             {
-                return Task.FromResult(true);
+                var response = await _client.CreateAsync(new CreateRequest { Email = user.Email, Name = user.Name, Password = user.Password });
+                if (!response.IsSuccess)
+                    throw new LCException(response.ErrorMessage);
+
+                return response.IsSuccess;
             } , correlationId);
 
             return result;
