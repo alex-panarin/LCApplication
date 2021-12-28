@@ -1,11 +1,6 @@
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace LC.Services.Identity
 {
@@ -20,8 +15,20 @@ namespace LC.Services.Identity
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
+                    webBuilder
+                    .ConfigureKestrel(options =>
+                     {
+                         options.ListenAnyIP(
+                             80, listenOptions => { listenOptions.Protocols = HttpProtocols.Http1AndHttp2; }
+                         );
+                         options.ListenAnyIP(
+                             5001, listenOptions => { listenOptions.Protocols = HttpProtocols.Http2; }
+                         );
+                     });
+
                     webBuilder.UseDefaultServiceProvider(option => option.ValidateScopes = false);
                     webBuilder.UseStartup<Startup>();
+
                 });
     }
 }

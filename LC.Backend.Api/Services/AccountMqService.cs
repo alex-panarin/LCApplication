@@ -9,17 +9,17 @@ using System.Threading.Tasks;
 
 namespace LC.Backend.Api.Services
 {
-    public class AccountService : 
+    public class AccountMqService : 
         ServiceBase, 
         IAccountService
     {
         private readonly IBusClient _client;
 
-        public AccountService(IBusClient client)
+        public AccountMqService(IBusClient client)
         {
             _client = client ?? throw new ArgumentNullException(nameof(IBusClient));
         }
-        public async Task<Result<bool>> CreateUserAsync(CreateUser user, Guid? correlationId)
+        public async Task<Result<bool>> CreateAsync(CreateUser user, Guid? correlationId)
         {
             var result = await InvokeWrapedAsync2(() => _client.PublishAsync(user), correlationId);
 
@@ -29,14 +29,14 @@ namespace LC.Backend.Api.Services
         public async Task<Result<AuthenticateResponse>> LoginAsync(Authenticate authenticate, Guid? correlationId)
         {
             var result = await InvokeWrapedAsync(() =>
-             {
-                 var authMessage = new AuthenticateRequest { email = authenticate.Email, password = authenticate.Password };
-                 var sequence = _client.ExecuteSequence(c => c
-                    .PublishAsync(authMessage)
-                    .Complete<AuthenticateResponse>());
+            {
+                var authMessage = new AuthenticateRequest { email = authenticate.Email, password = authenticate.Password };
+                var sequence = _client.ExecuteSequence(c => c
+                .PublishAsync(authMessage)
+                .Complete<AuthenticateResponse>());
 
-                 return  sequence.Task;
-             }, correlationId);
+                return  sequence.Task;
+            }, correlationId);
 
             return result;
         }

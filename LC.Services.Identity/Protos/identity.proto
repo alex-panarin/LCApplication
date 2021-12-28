@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+option csharp_namespace = "LC.Services.Identity";
+
+package identity;
+
+// The greeting service definition.
+service Identity {
+  // Sends a greeting
+  rpc Login (AuthRequest) returns (AuthResponce);
+}
+
+// The request message containing the user's name.
+message AuthRequest {
+  string email = 1;
+  string password = 2;
+}
+
+// The response message containing the greetings.
+message AuthResponce {
+   string Token  = 1;
+   int64 Expires = 2;	  
+   bool IsSuccess = 3;
+   string ErrorMessage = 4;
+}

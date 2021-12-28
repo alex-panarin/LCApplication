@@ -1,6 +1,7 @@
 using LC.Backend.Api.Services;
 using LC.Backend.Common.Auth;
 using LC.Backend.Common.MessageBus;
+using LC.Services.Identity;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpOverrides;
@@ -9,6 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using RawRabbit.Extensions.Client;
+using System;
 
 namespace LC.Backend.Api
 {
@@ -32,7 +34,16 @@ namespace LC.Backend.Api
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "LC.Backend.Api", Version = "v1" });
             });
-            services.AddScoped<IAccountService, AccountService>();
+
+            if(Configuration.GetValue<bool>("AccountService:UseGrpc") == true)
+                services.AddScoped<IAccountService, AccountGrpcService>();
+            else
+               services.AddScoped<IAccountService, AccountMqService>();
+
+            services.AddGrpcClient<Identity.IdentityClient>(o =>
+            {
+                o.Address = new Uri("http://identityservice:5001");
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

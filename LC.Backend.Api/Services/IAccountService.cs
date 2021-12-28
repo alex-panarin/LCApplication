@@ -8,7 +8,7 @@ namespace LC.Backend.Api.Services
 {
     public interface IAccountService
     {
-        Task<Result<bool>> CreateUserAsync(CreateUser user, Guid? correlationId);
+        Task<Result<bool>> CreateAsync(CreateUser user, Guid? correlationId);
         Task<Result<AuthenticateResponse>>  LoginAsync(Authenticate authenticate, Guid? correlationId);
     }
 }

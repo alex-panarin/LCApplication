@@ -16,8 +16,8 @@ namespace LC.Services.Identity.Handlers
         public AuthenticateHandler(IUserService service,
             IBusClient client)
         {
-            this._service = service;
-            this._client = client;
+            _service = service;
+            _client = client;
         }
         public async Task HandleAsync(AuthenticateRequest @event, Guid globalMessageId)
         {
