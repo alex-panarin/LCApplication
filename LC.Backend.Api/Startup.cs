@@ -35,15 +35,16 @@ namespace LC.Backend.Api
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "LC.Backend.Api", Version = "v1" });
             });
 
-            if(Configuration.GetValue<bool>("AccountService:UseGrpc") == true)
-                services.AddScoped<IAccountService, AccountGrpcService>();
-            else
-               services.AddScoped<IAccountService, AccountMqService>();
-
-            services.AddGrpcClient<Identity.IdentityClient>(o =>
+            if (Configuration.GetValue<bool>("AccountService:UseGrpc") == true)
             {
-                o.Address = new Uri("http://identityservice:5001");
-            });
+                services.AddScoped<IAccountService, AccountGrpcService>();
+                services.AddGrpcClient<Identity.IdentityClient>(o =>
+                {
+                    o.Address = new Uri(Configuration["IdentityService:Url"]);
+                });
+            }
+            else
+                services.AddScoped<IAccountService, AccountMqService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

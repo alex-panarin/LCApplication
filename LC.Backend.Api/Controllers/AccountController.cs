@@ -23,8 +23,8 @@ namespace LC.Backend.Api.Controllers
         [HttpPost("create")]
         public async Task<IActionResult> CreateUser([FromBody] CreateUser user)
         {
-            await  _service.CreateAsync(user, Guid.NewGuid());
-            return Accepted();
+            var result = await  _service.CreateAsync(user, Guid.NewGuid());
+            return Accepted(result);
         }
 
         [HttpPost("login")]
