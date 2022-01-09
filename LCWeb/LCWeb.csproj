@@ -1,0 +1,42 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+	
+  <ItemGroup>
+    <Content Remove="Pages\Counter.razor" />
+    <Content Remove="Pages\FetchData.razor" />
+    <Content Remove="Shared\Login.razor" />
+    <Content Remove="Shared\NavMenu.razor" />
+    <Content Remove="Shared\SurveyPrompt.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Shared\NavMenu.razor.css" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="5.0.12" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="5.0.12" PrivateAssets="all" />
+    <PackageReference Include="System.Net.Http.Json" Version="5.0.0" />
+  </ItemGroup>
+  
+	<!--<ItemGroup>
+		<BlazorWebAssemblyLazyLoad Include="LCLazyComponent.dll" />
+	</ItemGroup>-->
+	
+	<ItemGroup>
+		<ProjectReference Include="..\LCConfiguration\LCConfiguration.csproj" />
+		<ProjectReference Include="..\LCLazyComponent\LCLazyComponent.csproj" />
+		<ProjectReference Include="..\LCWebAssembly\LCWebAssembly.csproj" />
+		<ProjectReference Include="..\LCWebLayout\LCWebLayout.csproj" />
+	</ItemGroup>
+	
+	<ItemGroup>
+	  <Content Update="wwwroot\appsettings.json">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </Content>
+	</ItemGroup>
+
+</Project>

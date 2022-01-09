@@ -1,0 +1,58 @@
+﻿@page "/login"
+@using LCConfiguration.Services
+@using LCWeb.Repositories
+@inject IUserRepository Users
+@inject ILCConfiguration Config
+@inject HttpClient Client
+@inject NavigationManager manager
+<div class="container" style="width:320px; height:320px; border:thin 1px">
+    <div class="border bg-light">
+        <label class="form-label align-middle m-1 justify-content-center" for="users"> Вход в систему:</label>
+        <div class="input-group">
+            <span class="input-group-append oi oi-person m-2" title="person" aria-hidden="true"></span>
+            <select class="form-control form-control-sm rounded-1 mr-1" id="users" @bind="_selectedUser">
+                @foreach (var name in Users.UserNames)
+                {
+                    <option value="@name">@name</option>
+                }
+            </select>
+        </div>
+         <br>
+        <div class="input-group">
+            <span class="input-group-append oi oi-wrench m-2"></span>
+             <select class="form-control form-control-sm rounded-1 mr-1" id="roles" @bind="_selectedRole">
+                @foreach (var name in Users.UserRoles)
+                {
+                    <option value="@name">@name</option>
+                }
+            </select>
+        </div>
+         <br>
+        <div class="input-group">
+            <span class="input-group-append oi oi-lock-locked m-2"></span>
+            <input id="password" type="password" class="form-control form-control-sm rounded-1 mr-1" placeholder="Кодовое слово" @bind="_userPassword">
+        </div>
+         <br>
+        <button type="button" class="btn btn-info align-middle" id="login" @onclick=HandleClick>Войти</button>
+    </div>
+</div>
+
+@code {
+    private string _selectedUser;
+    private string _selectedRole;
+    private string _userPassword;
+
+    protected override void OnInitialized()
+    {
+        _selectedUser = Users.UserNames.First();
+        _selectedRole = Users.UserRoles.First();
+    }
+
+    private async void HandleClick()
+    {
+        Console.WriteLine($"{_selectedUser}:{_selectedRole}:{_userPassword}");
+        Program.Config = await Config.GetConfigurationAsync(Client, _selectedUser, _selectedRole, _userPassword);
+
+        manager.NavigateTo($"/{Program.Config.Key}");
+    }
+}

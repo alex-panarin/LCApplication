@@ -1,0 +1,54 @@
+﻿@using System.Reflection
+@using LCWebAssembly.Services
+@using LCWebLayout
+@using LCWebLayout.Services
+@using Microsoft.Extensions.Logging
+@using Microsoft.Extensions.Configuration;
+@using System.IO
+@inject IAssembliesLoader AssembliesLoader
+@inject ILayoutLoader LayoutLoader
+@inject ILogger<App> Logger
+
+<Router AppAssembly="@typeof(Program).Assembly" 
+    AdditionalAssemblies="@LoadedAssemblies" 
+    OnNavigateAsync="@OnNavigateAsync"
+    PreferExactMatches="@true">
+    <Navigating>
+        <div style="padding:20px;background-color:blue;color:white">
+            <p>Loading the requested page&hellip;</p>
+        </div>
+    </Navigating>
+    <Found Context="routeData">
+        <RouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)"/>
+    </Found>
+    <NotFound>
+        <LayoutView Layout="@typeof(MainLayout)">
+            <p>Sorry, there's nothing at this address.</p>
+        </LayoutView>
+    </NotFound>
+</Router>
+
+@code{
+    private List<Assembly> LoadedAssemblies = new List<Assembly>();
+
+    private async Task OnNavigateAsync(NavigationContext context) 
+    {
+        try
+        {
+            Logger.LogInformation($"Loading {context.Path}");
+            if (Program.Config?.Key != context.Path)
+                return;
+            var layout = await LayoutLoader.LoadLayoutAsync(context.Path, Logger);
+            if (layout == null)
+                return;
+
+            var assemblies = await AssembliesLoader.LoadAssembliesAsync(layout.Assemblies, Logger, Program.DefaultBuilder);
+            LoadedAssemblies.AddRange(assemblies);
+        }
+        catch(Exception x)
+        {
+            Logger.LogError(x, "OnNavigateAsync Loading assembly");
+        }
+    }
+}
+

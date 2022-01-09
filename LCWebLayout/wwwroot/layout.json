@@ -1,0 +1,12 @@
+{
+  "Layouts":[
+    {
+      "Key": "Admin",
+      "Assemblies": [ "LCLazyComponent" ]
+    },
+    {
+      "Key": "Cutter",
+      "Assemblies": [ "LCLazyComponent" ]
+    }
+  ]
+}
