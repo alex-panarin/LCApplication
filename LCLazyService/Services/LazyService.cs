@@ -1,18 +1,15 @@
 ﻿using LCRegistration;
 using System;
+using System.Net.Http;
 
 namespace LCLazyService.Services
 {
-    public class LazyService : ILasyService, IRegistration
+    [Registration(RegistrationType = typeof(ILasyService))]
+    public class LazyService : ILasyService
     {
         public void DoTask()
         {
             Console.WriteLine("Do some task");
-        }
-
-        public void Register(IServiceProvider provider)
-        {
-            provider.AddService(typeof(ILasyService), this);
         }
     }
 }

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace LCRegistration
 {
@@ -6,14 +8,14 @@ namespace LCRegistration
     {
         public static void AddService(this IServiceProvider provider, Type serviceType, Type implementationType)
         {
-            provider.AddService(serviceType, Activator.CreateInstance(implementationType));
-        }
-        public static void AddService(this IServiceProvider provider, Type serviceType, object service)
-        {
-            Console.WriteLine($"Register service: {service}");
             (provider as LCServiceProvider)?
                 .Services
-                .AddOrUpdate(serviceType, service, (k, v) => v);
+                .AddOrUpdate(serviceType, implementationType, (k, v) => v);
+        }
+        
+        public static bool IsEmpty<T>(this IEnumerable<T> collection)
+        {
+            return collection == null || !collection.Any();
         }
     }
 }

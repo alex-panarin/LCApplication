@@ -43,14 +43,13 @@ namespace LCWebAssembly.Services
                     var assembly = AssemblyLoadContext.Default.LoadFromStream(streamdll, streamPdb);
                     var registers = assembly
                         .GetTypes()
-                        .Where(t => t.GetInterface(nameof(IRegistration)) != null)
+                        .Where(t => t.GetCustomAttribute<RegistrationAttribute>() != null)
                         .ToArray();
 
                     foreach (var register in registers)
                     {
-                        var reg = Activator.CreateInstance(register) as IRegistration;
-                        reg?.Register(provider);
-                        logger?.LogInformation($"==> Register: {reg} <==");
+                        var regType = register.GetCustomAttribute<RegistrationAttribute>().RegistrationType;
+                        provider.AddService(regType, register);
                     }
 
                     assemblyList.Add(assembly);

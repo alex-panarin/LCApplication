@@ -1,6 +1,8 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Concurrent;
+using System.Linq;
+using System.Reflection;
 
 namespace LCRegistration
 {
@@ -29,27 +31,47 @@ namespace LCRegistration
 
     class LCServiceProvider : IServiceProvider, IServiceScopeFactory
     {
-        private static readonly ConcurrentDictionary<Type, object> _services = new ConcurrentDictionary<Type, object>();
+        private static readonly ConcurrentDictionary<Type, Type> _services = new ConcurrentDictionary<Type, Type>();
+        private static readonly ConcurrentDictionary<Type, object> _objects = new ConcurrentDictionary<Type, object>();
         private readonly IServiceProvider _provider;
 
         public LCServiceProvider(IServiceProvider provider)
         {
             _provider = provider;
-            Console.WriteLine($"Service provider: {provider}");
         }
         public object GetService(Type serviceType)
         {
             Console.WriteLine($"Get Service: {serviceType}");
             if (serviceType == typeof(IServiceScopeFactory))
                 return this;
+
             var service = _provider.GetService(serviceType);
-            return service ?? Services.GetOrAdd(serviceType, service);
+            if(service != null)
+                return service;
+
+            var implType = Services.GetOrAdd(serviceType, service?.GetType());
+            if(implType == null)
+                 return null;
+
+            return _objects.GetOrAdd(serviceType, GetServiceImpl(implType)) ;
         }
         public IServiceScope CreateScope()
         {
             return new LCServiceScope(this);
         }
-        public ConcurrentDictionary<Type, object> Services => _services;
+        public ConcurrentDictionary<Type, Type> Services => _services;
+
+        private object GetServiceImpl(Type implementationType)
+        {
+            var constructor = implementationType
+                .GetConstructors()
+                .FirstOrDefault();
+            var parameters = constructor?.GetParameters();
+            var service = constructor?.Invoke(parameters?.Select(p => GetService(p.ParameterType)).ToArray()); 
+            Console.WriteLine($"Create service: {service}");
+
+            return service;
+        }
     }
 
     class LCServiceScope : IServiceScope
