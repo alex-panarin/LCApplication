@@ -1,7 +1,13 @@
 ﻿@page "/Admin"
+@using LCLazyService.Services
+@inject ILasyService Service
+
 <h1>Admin page</h1>
 <MyLazyComponent/>
 
 @code {
-
+    protected override void OnInitialized()
+    {
+        Console.WriteLine($"Service: {Service}");
+    }
 }

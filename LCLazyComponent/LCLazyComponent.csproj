@@ -21,4 +21,8 @@
     <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="5.0.12" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\LCLazyService\LCLazyService.csproj" />
+  </ItemGroup>
+
 </Project>

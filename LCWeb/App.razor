@@ -37,12 +37,15 @@
         {
             Logger.LogInformation($"Loading {context.Path}");
             if (Program.Config?.Key != context.Path)
+            {
+                Logger.LogInformation($"Context: {context.Path}, Config: {Program.Config}");
                 return;
+            }
             var layout = await LayoutLoader.LoadLayoutAsync(context.Path, Logger);
             if (layout == null)
                 return;
 
-            var assemblies = await AssembliesLoader.LoadAssembliesAsync(layout.Assemblies, Logger, Program.DefaultBuilder);
+            var assemblies = await AssembliesLoader.LoadAssembliesAsync(layout.Assemblies, Logger, Program.DefaultProvider);
             LoadedAssemblies.AddRange(assemblies);
         }
         catch(Exception x)

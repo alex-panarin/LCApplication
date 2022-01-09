@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
+﻿using LCRegistration;
+using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -19,7 +21,7 @@ namespace LCWebAssembly.Services
             _client = client;
         }
 
-        public async Task<IEnumerable<Assembly>> LoadAssembliesAsync(string[] assemblyNames, ILogger logger, WebAssemblyHostBuilder builder)
+        public async Task<IEnumerable<Assembly>> LoadAssembliesAsync(string[] assemblyNames, ILogger logger, IServiceProvider provider)
         {
             var assemblyList = new List<Assembly>();
             foreach (var assemblyName in assemblyNames)
@@ -39,9 +41,15 @@ namespace LCWebAssembly.Services
                 if (streamdll != null)
                 {
                     var assembly = AssemblyLoadContext.Default.LoadFromStream(streamdll, streamPdb);
-                    //var register = assembly
-                    //    .GetTypes()
-                    //    .FirstOrDefault(t => t.IsInstanceOfType(assemblyName))
+                    var register = assembly
+                        .GetTypes()
+                        .FirstOrDefault(t => t.GetInterface(nameof(IRegistration)) != null);
+                    if(register != null)
+                    {
+                        var reg = Activator.CreateInstance(register) as IRegistration;
+                        reg?.Register(provider);
+                        logger?.LogInformation($"==> Register: {reg} <==");
+                    }
                     assemblyList.Add(assembly);
                     await streamdll.DisposeAsync();
                     if(streamPdb != null)

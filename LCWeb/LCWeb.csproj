@@ -29,6 +29,8 @@
 	<ItemGroup>
 		<ProjectReference Include="..\LCConfiguration\LCConfiguration.csproj" />
 		<ProjectReference Include="..\LCLazyComponent\LCLazyComponent.csproj" />
+		<ProjectReference Include="..\LCLazyService\LCLazyService.csproj" />
+		<ProjectReference Include="..\LCRegistration\LCRegistration.csproj" />
 		<ProjectReference Include="..\LCWebAssembly\LCWebAssembly.csproj" />
 		<ProjectReference Include="..\LCWebLayout\LCWebLayout.csproj" />
 	</ItemGroup>
