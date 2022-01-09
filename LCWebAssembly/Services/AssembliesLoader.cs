@@ -41,15 +41,18 @@ namespace LCWebAssembly.Services
                 if (streamdll != null)
                 {
                     var assembly = AssemblyLoadContext.Default.LoadFromStream(streamdll, streamPdb);
-                    var register = assembly
+                    var registers = assembly
                         .GetTypes()
-                        .FirstOrDefault(t => t.GetInterface(nameof(IRegistration)) != null);
-                    if(register != null)
+                        .Where(t => t.GetInterface(nameof(IRegistration)) != null)
+                        .ToArray();
+
+                    foreach (var register in registers)
                     {
                         var reg = Activator.CreateInstance(register) as IRegistration;
                         reg?.Register(provider);
                         logger?.LogInformation($"==> Register: {reg} <==");
                     }
+
                     assemblyList.Add(assembly);
                     await streamdll.DisposeAsync();
                     if(streamPdb != null)
