@@ -1,4 +1,6 @@
-﻿<a href=@Link target="_blank" class="ml-md-auto">@Text</a>
+﻿<NavLink class="nav-link" href=@Link >
+    @Text
+</NavLink>
 
 @code {
     private string Text => IsLogged ? "Logout": "Login";

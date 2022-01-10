@@ -36,6 +36,7 @@
         try
         {
             Logger.LogInformation($"Loading {context.Path}");
+            LoadedAssemblies.Clear();
             if (Program.Config?.Key != context.Path)
             {
                 Logger.LogInformation($"Context: {context.Path}, Config: {Program.Config}");
