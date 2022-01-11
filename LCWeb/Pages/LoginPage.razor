@@ -51,8 +51,8 @@
     private async void HandleClick()
     {
         Console.WriteLine($"{_selectedUser}:{_selectedRole}:{_userPassword}");
-        Program.Config = await Config.GetConfigurationAsync(Client, _selectedUser, _selectedRole, _userPassword);
+        var config = await Config.GetConfigurationAsync(Client, _selectedUser, _selectedRole, _userPassword);
 
-        manager.NavigateTo($"/{Program.Config.Key}");
+        manager.NavigateTo($"/{config?.Key}");
     }
 }

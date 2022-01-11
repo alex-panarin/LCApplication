@@ -17,7 +17,7 @@ namespace LCConfiguration.Services
         }
         public async Task<LCConfig> GetConfigurationAsync(HttpClient client, string userName, string userRole, string password)
         {
-            //var content =  JsonContent.Create(new Authenticate { Password = password, Email = userName});
+            //var content =  JsonContent.Create(new AuthRequest { Password = password, Email = userName});
             //var response = await client.PostAsJsonAsync(_config.GetSection("ConfigUrl").Value, content);
             //var data = await response
             //    .EnsureSuccessStatusCode()
@@ -28,7 +28,7 @@ namespace LCConfiguration.Services
             return await Task.FromResult( new LCConfig { Key = userRole, Token = token.Token, Expires = token.Expires });
         }
 
-        class Authenticate
+        class AuthRequest
         {
             public string Password { get; set; }
             public string Email { get; set; }

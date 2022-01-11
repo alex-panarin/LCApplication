@@ -1,16 +1,16 @@
 ﻿@using System.Reflection
 @using LCWebAssembly.Services
+@using LCWebComposer.Services
 @using LCWebLayout
 @using LCWebLayout.Services
 @using Microsoft.Extensions.Logging
 @using Microsoft.Extensions.Configuration;
 @using System.IO
-@inject IAssembliesLoader AssembliesLoader
-@inject ILayoutLoader LayoutLoader
+@inject ILCComposer Composer
 @inject ILogger<App> Logger
 
 <Router AppAssembly="@typeof(Program).Assembly" 
-    AdditionalAssemblies="@LoadedAssemblies" 
+    AdditionalAssemblies="@Composer.LoadedAssemblies" 
     OnNavigateAsync="@OnNavigateAsync"
     PreferExactMatches="@true">
     <Navigating>
@@ -29,25 +29,11 @@
 </Router>
 
 @code{
-    private List<Assembly> LoadedAssemblies = new List<Assembly>();
-
     private async Task OnNavigateAsync(NavigationContext context) 
     {
         try
         {
-            Logger.LogInformation($"Loading {context.Path}");
-            LoadedAssemblies.Clear();
-            if (Program.Config?.Key != context.Path)
-            {
-                Logger.LogInformation($"Context: {context.Path}, Config: {Program.Config}");
-                return;
-            }
-            var layout = await LayoutLoader.LoadLayoutAsync(context.Path, Logger);
-            if (layout == null)
-                return;
-
-            var assemblies = await AssembliesLoader.LoadAssembliesAsync(layout.Assemblies, Logger, Program.DefaultProvider);
-            LoadedAssemblies.AddRange(assemblies);
+            await Composer.Compose(context.Path, Program.DefaultProvider, Logger);
         }
         catch(Exception x)
         {

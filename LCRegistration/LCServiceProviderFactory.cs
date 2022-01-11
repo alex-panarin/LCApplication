@@ -31,8 +31,8 @@ namespace LCRegistration
 
     class LCServiceProvider : IServiceProvider, IServiceScopeFactory
     {
-        private static readonly ConcurrentDictionary<Type, Type> _services = new ConcurrentDictionary<Type, Type>();
-        private static readonly ConcurrentDictionary<Type, object> _objects = new ConcurrentDictionary<Type, object>();
+        private readonly ConcurrentDictionary<Type, Type> _services = new ConcurrentDictionary<Type, Type>();
+        private readonly ConcurrentDictionary<Type, object> _objects = new ConcurrentDictionary<Type, object>();
         private readonly IServiceProvider _provider;
 
         public LCServiceProvider(IServiceProvider provider)
@@ -53,7 +53,7 @@ namespace LCRegistration
             if(implType == null)
                  return null;
 
-            return _objects.GetOrAdd(serviceType, GetServiceImpl(implType)) ;
+            return _objects.GetOrAdd(serviceType, GetServiceImpl(implType));
         }
         public IServiceScope CreateScope()
         {

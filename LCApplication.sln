@@ -44,9 +44,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LCWebAssembly", "LCWebAssem
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LCConfiguration", "LCConfiguration\LCConfiguration.csproj", "{3C4C89FD-0233-49E0-962F-E55E87BD0BC5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LCLazyService", "LCLazyService\LCLazyService.csproj", "{816BD806-220D-42CA-8010-C4A384DE8DFE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LCLazyService", "LCLazyService\LCLazyService.csproj", "{816BD806-220D-42CA-8010-C4A384DE8DFE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LCRegistration", "LCRegistration\LCRegistration.csproj", "{D7FC0B95-EC11-4956-BF52-97494E7DAEAB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LCRegistration", "LCRegistration\LCRegistration.csproj", "{D7FC0B95-EC11-4956-BF52-97494E7DAEAB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LCWebComposer", "LCWebComposer\LCWebComposer.csproj", "{F4015FAE-E14C-4252-8EAA-6B0F7FBB0F06}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -102,6 +104,10 @@ Global
 		{D7FC0B95-EC11-4956-BF52-97494E7DAEAB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D7FC0B95-EC11-4956-BF52-97494E7DAEAB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D7FC0B95-EC11-4956-BF52-97494E7DAEAB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F4015FAE-E14C-4252-8EAA-6B0F7FBB0F06}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F4015FAE-E14C-4252-8EAA-6B0F7FBB0F06}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F4015FAE-E14C-4252-8EAA-6B0F7FBB0F06}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F4015FAE-E14C-4252-8EAA-6B0F7FBB0F06}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -122,6 +128,7 @@ Global
 		{3C4C89FD-0233-49E0-962F-E55E87BD0BC5} = {8C997655-4C71-4097-8A11-49E6C016258F}
 		{816BD806-220D-42CA-8010-C4A384DE8DFE} = {8C997655-4C71-4097-8A11-49E6C016258F}
 		{D7FC0B95-EC11-4956-BF52-97494E7DAEAB} = {8C997655-4C71-4097-8A11-49E6C016258F}
+		{F4015FAE-E14C-4252-8EAA-6B0F7FBB0F06} = {8C997655-4C71-4097-8A11-49E6C016258F}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BCAF50ED-E9B9-4CC2-9F6C-9C2AEB2D7918}
