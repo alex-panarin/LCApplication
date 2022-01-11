@@ -9,9 +9,9 @@ namespace LCWebComposer
     {
         public static void AddWebComposer(this IServiceCollection services)
         {
-            services.AddScoped<ILayoutLoader, LayoutLoader>();
-            services.AddScoped<IAssembliesLoader, AssembliesLoader>();
-            services.AddScoped<ILCComposer, LCComposer>();
+            services.AddSingleton<ILayoutLoader, LayoutLoader>();
+            services.AddSingleton<IAssembliesLoader, AssembliesLoader>();
+            services.AddSingleton<ILCComposer, LCComposer>();
         }
     }
 }
