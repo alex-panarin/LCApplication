@@ -1,9 +1,12 @@
 ﻿using LCWebLayout.Models;
-using System.Text.Json;
+using Microsoft.Extensions.Logging;
+using System;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Json;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Logging;
 
 namespace LCWebLayout.Services
 {
@@ -16,14 +19,15 @@ namespace LCWebLayout.Services
         }
         public async Task<LCLayout> LoadLayoutAsync(string configKey, ILogger logger = null)
         {
-            var response = await _client.GetAsync("layout.json");
-            var jsonString = await response.Content.ReadAsStringAsync();
-            logger?.LogInformation($"==> Layouts: {jsonString} <==");
+            var array = await _client.GetFromJsonAsync<LayoutArray>("layout.json", new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            });
+            logger?.LogInformation($"==> Layouts: {array} <==");
 
-            var array = JsonSerializer.Deserialize<LayoutArray>(jsonString);
             return array
                 .Layouts
-                .FirstOrDefault(l => l.Key == configKey);
+                .FirstOrDefault(l =>string.Equals(l.Key, configKey, StringComparison.InvariantCultureIgnoreCase));
         }
     }
 }
