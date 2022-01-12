@@ -4,13 +4,13 @@ using System.Threading.Tasks;
 
 namespace LC.Backend.Common.Services
 {
-    public class ServiceBase 
+    public class ServiceBase
     {
         protected Result<TResult> InvokeWraped<TResult>(Func<TResult> func, Guid? correlationId = null)
         {
             try
             {
-                var result  = func();
+                var result = func();
 
                 return Result<TResult>.Success(result, correlationId);
             }

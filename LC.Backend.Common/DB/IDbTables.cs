@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace LC.Backend.Common.DB
+﻿namespace LC.Backend.Common.DB
 {
     public interface IDbTables
     {
@@ -13,6 +7,6 @@ namespace LC.Backend.Common.DB
 
     public class DbTables : IDbTables
     {
-        public string[] Tables { get ; set ; }
+        public string[] Tables { get; set; }
     }
 }

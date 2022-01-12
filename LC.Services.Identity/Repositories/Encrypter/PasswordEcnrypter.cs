@@ -8,7 +8,7 @@ namespace LC.Services.Identity.Repositories.Encrypter
         private static readonly int SaltSize = 40;
         public string GetHash(string value, string salt)
         {
-            var hash = new Rfc2898DeriveBytes(value, GetBytes(salt),10000);
+            var hash = new Rfc2898DeriveBytes(value, GetBytes(salt), 10000);
             return Convert.ToBase64String(hash.GetBytes(SaltSize));
         }
 

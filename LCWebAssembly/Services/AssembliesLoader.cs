@@ -1,5 +1,4 @@
 ﻿using LCRegistration;
-using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -34,7 +33,7 @@ namespace LCWebAssembly.Services
                     streamdll = await _client.GetStreamAsync(path + ".dll");
                     streamPdb = await _client.GetStreamAsync(path + ".pdb");
                 }
-                catch(HttpRequestException x)
+                catch (HttpRequestException x)
                 {
                     logger?.LogError(x, nameof(LoadAssembliesAsync));
                 }
@@ -54,7 +53,7 @@ namespace LCWebAssembly.Services
 
                     assemblyList.Add(assembly);
                     await streamdll.DisposeAsync();
-                    if(streamPdb != null)
+                    if (streamPdb != null)
                         await streamPdb.DisposeAsync();
                 }
             }

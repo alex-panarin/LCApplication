@@ -14,7 +14,7 @@ namespace LC.Services.Logging.Repositories
         }
         public async Task Log(LogRow log)
         {
-           await _context.AddAsync(log);
+            await _context.AddAsync(log);
         }
     }
 }

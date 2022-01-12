@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Concurrent;
 using System.Linq;
-using System.Reflection;
 
 namespace LCRegistration
 {
@@ -23,7 +22,7 @@ namespace LCRegistration
 
         public IServiceProvider CreateServiceProvider(IServiceCollection containerBuilder)
         {
-            if(_provider == null)
+            if (_provider == null)
                 _provider = new LCServiceProvider(containerBuilder.BuildServiceProvider(_options));
             return _provider;
         }
@@ -46,12 +45,12 @@ namespace LCRegistration
                 return this;
 
             var service = _provider.GetService(serviceType);
-            if(service != null)
+            if (service != null)
                 return service;
 
             var implType = Services.GetOrAdd(serviceType, service?.GetType());
-            if(implType == null)
-                 return null;
+            if (implType == null)
+                return null;
 
             return _objects.GetOrAdd(serviceType, GetServiceImpl(implType));
         }
@@ -67,7 +66,7 @@ namespace LCRegistration
                 .GetConstructors()
                 .FirstOrDefault();
             var parameters = constructor?.GetParameters();
-            var service = constructor?.Invoke(parameters?.Select(p => GetService(p.ParameterType)).ToArray()); 
+            var service = constructor?.Invoke(parameters?.Select(p => GetService(p.ParameterType)).ToArray());
             Console.WriteLine($"Create service: {service}");
 
             return service;
@@ -81,7 +80,7 @@ namespace LCRegistration
             Console.WriteLine($"Get Scope: {this}");
             ServiceProvider = provider;
         }
-        public IServiceProvider ServiceProvider { get; private set;}
+        public IServiceProvider ServiceProvider { get; private set; }
 
         public void Dispose()
         {

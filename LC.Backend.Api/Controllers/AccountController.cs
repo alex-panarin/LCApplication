@@ -1,9 +1,6 @@
 ﻿using LC.Backend.Api.Services;
 using LC.Backend.Common.Commands.Models;
-using LC.Backend.Common.Events.Models;
-using LC.Backend.Common.Services;
 using Microsoft.AspNetCore.Mvc;
-using RawRabbit.Extensions.MessageSequence;
 using System;
 using System.Threading.Tasks;
 
@@ -17,27 +14,27 @@ namespace LC.Backend.Api.Controllers
 
         public AccountController(IAccountService service)
         {
-            _service = service ?? throw new ArgumentNullException(nameof(IAccountService)); 
+            _service = service ?? throw new ArgumentNullException(nameof(IAccountService));
         }
-        
+
         [HttpPost("create")]
         public async Task<IActionResult> CreateUser([FromBody] CreateUser user)
         {
-            var result = await  _service.CreateAsync(user, Guid.NewGuid());
+            var result = await _service.CreateAsync(user, Guid.NewGuid());
             return Accepted(result);
         }
 
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] Authenticate authenticate)
         {
-           var result = await _service.LoginAsync(authenticate, Guid.NewGuid());
+            var result = await _service.LoginAsync(authenticate, Guid.NewGuid());
 
             return !result.IsSuccess
                 ? BadRequest(result.ErrorMessages)
                 : result.Data?.IsSuccess == true
                 ? Ok(result.Data.Token)
                 : Unauthorized(result.Data.ErrorMessage);
-                
+
         }
     }
 }

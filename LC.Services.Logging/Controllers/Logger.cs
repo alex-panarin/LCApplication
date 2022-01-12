@@ -1,8 +1,5 @@
-﻿using LC.Backend.Common.Operations;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Threading.Tasks;
 
 namespace LC.Services.Logging.Controllers
 {
@@ -20,7 +17,7 @@ namespace LC.Services.Logging.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            
+
             return Ok("Logger controller");
         }
     }

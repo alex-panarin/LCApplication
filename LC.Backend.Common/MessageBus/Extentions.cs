@@ -1,9 +1,7 @@
-﻿using LC.Backend.Common.MessageBus.RawRabbit;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using RawRabbit.vNext;
 using RawRabbit.Extensions.Client;
-using RawRabbit.Context;
+using RawRabbit.vNext;
 
 namespace LC.Backend.Common.MessageBus
 {

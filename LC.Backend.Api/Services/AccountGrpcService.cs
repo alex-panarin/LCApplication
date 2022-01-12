@@ -25,7 +25,7 @@ namespace LC.Backend.Api.Services
                     throw new LCException(response.ErrorMessage);
 
                 return response.IsSuccess;
-            } , correlationId);
+            }, correlationId);
 
             return result;
         }

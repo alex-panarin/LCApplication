@@ -1,5 +1,4 @@
-﻿using LC.Backend.Common.Operations;
-using LC.Services.Identity.Repositories.Encrypter;
+﻿using LC.Services.Identity.Repositories.Encrypter;
 using LC.Services.Identity.Repositories.Entities;
 using System;
 

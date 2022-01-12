@@ -12,7 +12,7 @@ namespace LCRegistration
                 .Services
                 .AddOrUpdate(serviceType, implementationType, (k, v) => v);
         }
-        
+
         public static bool IsEmpty<T>(this IEnumerable<T> collection)
         {
             return collection == null || !collection.Any();

@@ -28,7 +28,7 @@ namespace LC.Services.Identity.Services
             _handler = handler ?? throw new ArgumentNullException(nameof(JwtHandler));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
-        
+
         public async Task<Result<bool>> CreateAsync(string email, string name, string password, Guid correlationId)
         {
             var user = await _userRepository.GetAsync(email);

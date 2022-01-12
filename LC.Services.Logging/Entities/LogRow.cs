@@ -9,7 +9,7 @@ namespace LC.Services.Logging.Entities
         {
             DateCreated = DateTime.Now;
         }
-        public Guid Id { get ; set ; }
+        public Guid Id { get; set; }
         public DateTime DateCreated { get; protected set; }
         public string Operation { get; set; }
         public string Method { get; set; }

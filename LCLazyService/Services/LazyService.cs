@@ -1,6 +1,5 @@
 ﻿using LCRegistration;
 using System;
-using System.Net.Http;
 
 namespace LCLazyService.Services
 {

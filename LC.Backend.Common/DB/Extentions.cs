@@ -7,7 +7,7 @@ namespace LC.Backend.Common.DB
 {
     public static class Extentions
     {
-        public static void AddMongoDb(this IServiceCollection service, IConfiguration configuration )
+        public static void AddMongoDb(this IServiceCollection service, IConfiguration configuration)
         {
             service.Configure<MongoConnection>(configuration.GetSection("mongo"));
             service.Configure<DbTables>(configuration.GetSection("tables"));

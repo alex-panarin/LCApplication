@@ -3,7 +3,6 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Runtime.CompilerServices;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace LC.Backend.Common.Operations
@@ -15,13 +14,13 @@ namespace LC.Backend.Common.Operations
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
-       
+
         public async Task<Result<TResult>> ExecuteAsync(TInput input, Guid? correlationId, [CallerMemberName] string methodName = null)
         {
             Result<TResult> result = null;
             try
             {
-                result =  await CallMethodWrapedAync(() => ExecuteImplAsync(input), input, correlationId, methodName);
+                result = await CallMethodWrapedAync(() => ExecuteImplAsync(input), input, correlationId, methodName);
             }
             catch (Exception x)
             {
@@ -56,6 +55,6 @@ namespace LC.Backend.Common.Operations
         protected JsonSerializerOptions JsonOptions => Utils.JsonOptions;
         protected ILogger Logger => _logger;
         protected abstract string OperationName { get; }
-        
+
     }
 }

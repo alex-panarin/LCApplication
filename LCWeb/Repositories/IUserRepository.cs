@@ -2,7 +2,7 @@
 {
     public interface IUserRepository
     {
-        string[] UserNames { get; } 
+        string[] UserNames { get; }
         string[] UserRoles { get; }
     }
 }

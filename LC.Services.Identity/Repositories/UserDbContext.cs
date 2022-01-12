@@ -2,17 +2,17 @@
 using LC.Services.Identity.Repositories.Entities;
 using MongoDB.Driver;
 using MongoDB.Driver.Linq;
-using System.Threading.Tasks;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace LC.Services.Identity.Repositories
 {
     public class UserDbContext : MongoDbContext<User>
     {
         public UserDbContext(IMongoDatabase db)
-            : base(db, ()=> db.GetCollection<User>("users"))
+            : base(db, () => db.GetCollection<User>("users"))
         {
-            
+
         }
         public async Task<User> GetAsync(string email)
         {

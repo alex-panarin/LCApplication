@@ -28,10 +28,10 @@ namespace LC.Services.Identity.Logging
         {
             if (!IsEnabled(logLevel))
                 return;
-            var logEvent = state is LogObject lo 
+            var logEvent = state is LogObject lo
                 ? new LogEvent(lo.ToLogMessage(), lo.CorrelationId)
                 : new LogEvent(formatter?.Invoke(state, exception), Guid.NewGuid());
-            
+
             Task.Run(async () => await _busClient.PublishAsync(logEvent));
         }
     }

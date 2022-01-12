@@ -1,7 +1,6 @@
 ﻿using LC.Backend.Common.Commands.Models;
 using LC.Backend.Common.Controllers;
 using LC.Services.Identity.Services;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;

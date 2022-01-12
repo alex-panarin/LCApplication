@@ -24,13 +24,13 @@ namespace LC.Backend.Common.Logging
 
         public static void LogError(this ILogger logger, Exception x, [CallerMemberName] string caller = null)
         {
-           LogError(logger, null, x, caller);
+            LogError(logger, null, x, caller);
         }
 
         public static string ToLogMessage(this LogObject lo)
         {
             return JsonSerializer.Serialize(lo, Utils.JsonOptions);
         }
-    
+
     }
 }

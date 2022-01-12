@@ -2,9 +2,9 @@
 using LC.Backend.Common.Events;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
+using RawRabbit.Extensions.Client;
 using System;
 using System.Reflection;
-using RawRabbit.Extensions.Client;
 
 namespace LC.Backend.Common.MessageBus.RawRabbit
 {

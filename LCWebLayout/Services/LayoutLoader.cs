@@ -5,7 +5,6 @@ using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace LCWebLayout.Services
@@ -27,7 +26,7 @@ namespace LCWebLayout.Services
 
             return array
                 .Layouts
-                .FirstOrDefault(l =>string.Equals(l.Key, configKey, StringComparison.InvariantCultureIgnoreCase));
+                .FirstOrDefault(l => string.Equals(l.Key, configKey, StringComparison.InvariantCultureIgnoreCase));
         }
     }
 }

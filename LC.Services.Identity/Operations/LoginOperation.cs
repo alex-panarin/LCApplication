@@ -4,7 +4,6 @@ using LC.Backend.Common.Operations;
 using LC.Services.Identity.Repositories;
 using LC.Services.Identity.Repositories.Encrypter;
 using Microsoft.Extensions.Logging;
-using System;
 using System.Threading.Tasks;
 
 namespace LC.Services.Identity.Operations
@@ -21,7 +20,7 @@ namespace LC.Services.Identity.Operations
             IUserRepository userRepository,
             IPasswordEncrypter encrypter,
             IJwtHandler handler)
-            :base (logger)
+            : base(logger)
         {
             _userRepository = userRepository;
             _encrypter = encrypter;

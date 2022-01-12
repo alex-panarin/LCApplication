@@ -8,7 +8,7 @@ namespace LC.Backend.Common.Infrastructure
     {
         public static void ConfigureDb(this IServiceProvider service)
         {
-            service.GetService<IDbInitializer>().InitializeAsync();  
+            service.GetService<IDbInitializer>().InitializeAsync();
         }
     }
 }

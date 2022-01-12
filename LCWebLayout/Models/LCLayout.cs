@@ -4,6 +4,6 @@
     {
         public string[] Assemblies { get; set; }
         public string Key { get; set; }
-        
+
     }
 }

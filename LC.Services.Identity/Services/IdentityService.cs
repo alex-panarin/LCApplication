@@ -1,7 +1,6 @@
 ﻿using Grpc.Core;
 using LC.Backend.Common.Commands.Models;
 using System;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace LC.Services.Identity.Services
@@ -21,14 +20,14 @@ namespace LC.Services.Identity.Services
                 IsSuccess = result.IsSuccess,
                 ErrorMessage = result.ErrorMessages,
                 Expires = result.IsSuccess ? result.Data.Expires : 0,
-                Token   = result.Data?.Token
+                Token = result.Data?.Token
             };
         }
 
         public override async Task<CreateResponse> Create(CreateRequest request, ServerCallContext context)
         {
             var result = await _userService.CreateAsync(request.Email, request.Name, request.Password, Guid.NewGuid());
-            return new CreateResponse { IsSuccess = result.IsSuccess, ErrorMessage = result.ErrorMessages};
+            return new CreateResponse { IsSuccess = result.IsSuccess, ErrorMessage = result.ErrorMessages };
         }
     }
 }

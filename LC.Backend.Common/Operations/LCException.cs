@@ -7,7 +7,7 @@ namespace LC.Backend.Common.Operations
         public LCException(string message)
             : base(message)
         {
-            
+
         }
 
     }

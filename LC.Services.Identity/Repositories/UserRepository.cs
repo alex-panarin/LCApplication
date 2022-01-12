@@ -17,8 +17,8 @@ namespace LC.Services.Identity.Repositories
            => await _dbContext.GetAsync(id);
 
         public async Task<User> GetAsync(string email)
-            => await _dbContext.GetAsync(email);  
-               
+            => await _dbContext.GetAsync(email);
+
 
         public async Task AddAsync(User user)
             => await _dbContext.AddAsync(user);

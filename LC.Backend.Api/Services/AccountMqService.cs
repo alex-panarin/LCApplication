@@ -9,8 +9,8 @@ using System.Threading.Tasks;
 
 namespace LC.Backend.Api.Services
 {
-    public class AccountMqService : 
-        ServiceBase, 
+    public class AccountMqService :
+        ServiceBase,
         IAccountService
     {
         private readonly IBusClient _client;
@@ -35,7 +35,7 @@ namespace LC.Backend.Api.Services
                 .PublishAsync(authMessage)
                 .Complete<AuthenticateResponse>());
 
-                return  sequence.Task;
+                return sequence.Task;
             }, correlationId);
 
             return result;
